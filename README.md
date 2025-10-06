@@ -1,5 +1,4 @@
-# IP_TCPoDWDM_IMOC2025
-On the Interplay of Congestion and OSNR Degradation for TCP over Optical Networks
+# On the Interplay of Congestion and OSNR Degradation for TCP over Optical Networks
 
 Abstract—This work investigates transmission control protocol (TCP) performance over optical networks, highlighting the
 interplay of physical layer effects and congestion caused by buffer overflow at intermediate nodes on different congestion
