@@ -15,3 +15,13 @@ networks.
 **Index Terms** — *Congestion Control Algorithms, Physical Layer Impairments, Optical Networks.*
 
 ![Setup de testes](Images/Diagram_CC_TCP_BW2.png)
+
+## Results
+![Setup de testes](Images/Throughput_00_loss.png)
+![Setup de testes](Images/Retr_00_loss.png)
+![Setup de testes](Images/Throughput_02_loss.png)
+![Setup de testes](Images/Retr_02_loss.png)
+![Setup de testes](Images/Throughput_05_loss.png)
+![Setup de testes](Images/Retr_05_loss.png)
+![Setup de testes](Images/Throughput_08_loss.png)
+![Setup de testes](Images/Retr_08_loss.png)
