@@ -90,19 +90,6 @@ class SimpleLinkTopo(Topo):
         s3 = self.addSwitch('s3', failMode='standalone', stp=True)
         s4 = self.addSwitch('s4', failMode='standalone', stp=True)
 
-# Link backbone routers (s1 & s2) together
-# self.addLink(s1, s2, cls=TCLink, **br_params)
-        # Ethernet links
-        self.addLink(s1,t1)
-        self.addLink(s2,t2)
-        
-# WDM link
-        boost = ('boost', {'target_gain': 3.0*dB})
-        # amp1 = ('amp1', {'target_gain': 25*.22*dB})
-        # amp2 = ('amp2', {'target_gain': 40*.22*dB})
-        # amp3 = ('amp3', {'target_gain': 50*.22*dB})
-        # spans = [5*km, amp1, 5*km, amp2]
-        spans = [50*km]
 
         # Link backbone routers (s1 & s2) together
         #self.addLink(s1, s2, cls=TCLink, **br_params)
