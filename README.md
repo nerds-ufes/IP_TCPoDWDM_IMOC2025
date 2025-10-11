@@ -13,3 +13,5 @@ that stringent signal quality requirements can be relaxed in forthcoming IPoDWDM
 networks.
 
 **Index Terms** — *Congestion Control Algorithms, Physical Layer Impairments, Optical Networks.*
+
+![Setup de testes] (https://github.com/nerds-ufes/IP_TCPoDWDM/blob/main/Images/Diagram_CC_TCP_BW2.png)
