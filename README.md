@@ -51,3 +51,5 @@ networks.
 ![Retransmission and Throughput average per Queue Variation by TCP congestion control algorithm with 0.8% losses - gOSNR ≈ 18.95 dB](Images/Retr_08_loss.png)
 
 **Fig. 9** - *Retransmission and Throughput average per Queue Variation by TCP congestion control algorithm with 0.8% losses - gOSNR ≈ 18.95 dB*
+
+## **All results can be reproduced by running the scripts available in the "scripts" directory**
