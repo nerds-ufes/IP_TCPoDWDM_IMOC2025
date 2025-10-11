@@ -50,8 +50,6 @@ import socket
 import numpy as np
 
 
-iperf_csv_header = ['time', 'src_addr', 'src_port', 'dst_addr' ,'dst_port', 'other', 'interval', 'B_sent', 'bps']
-
 #########################################################################
 ################ DELETA AS INFERFACES CRIADAS ###########################
 #########################################################################
@@ -60,145 +58,6 @@ def limpa_int():
 	interfaces = ["r1-wdm5","r1-wdm25","r2-wdm15","r2-wdm25","s1-eth1","s1-eth2","s2-eth1","s2-eth2","s3-eth1","s4-eth1","t5-wdm5","t15-wdm15","h101-eth0","t5-eth1","h102-eth0","t15-eth1"]
 	for interface in interfaces:
 		subprocess.run(["sudo","ip","link","delete", interface])
-
-#################################################################
-######### LEITURA DO ARQUIVOS DE DADOS DE TRANSMISSÃO  ########## 
-#################################################################
-def parse_iperf_data(alg, delay, host_addrs, hsrc, hdst):
-    """ Parse the iperf data files for the given algorithm and RTT.
-
-        :param  alg         String with the TCP congestion control algorithms data to parse.
-        :param  delay       Integer with the delay data to parse.
-        :param  host_addrs  Dictionary with the host names as keys and their addresses as values.
-    """
-    data = dict({hsrc: {'Mbps': list(), 'time': list()}, hdst: {'Mbps': list(), 'time': list()}})
-                 
-
-    # Use time's first value as time=0, and convert the bps to Mbps
-    first_row = True
-    with open('iperf_{0}_{1}-{2}_{3}ms.txt'.format(alg, hsrc, hdst, delay),'r+') as fcsv:
-        r = csv.DictReader(fcsv, delimiter=',', fieldnames=iperf_csv_header)
-        for row in r:
-            if host_addrs[hsrc] in row['src_addr']:
-                time = mktime(datetime.strptime(str(row['time']), '%Y%m%d%H%M%S').timetuple())
-
-                # On the first row set up the required values. Then, check for repeated timestamps and fix that
-                if first_row:
-                    time_init = time
-                    first_row = False
-                    data[hsrc]['time'].append(time - time_init)
-                elif time-time_init == data[hsrc]['time'][-1]:
-                    data[hsrc]['time'].append(time - time_init + 1)
-                else:
-                    data[hsrc]['time'].append(time - time_init)
-                data[hsrc]['Mbps'].append(int(row['bps'])/1000000)
-                
-    # Pop the last row because it is the average bandwidth of the session
-
-    print('{0}: time={1}, bandwidth={2}'.format(hsrc, data[hsrc]['time'].pop(), data[hsrc]['Mbps'].pop()))
-    
-    total = 0
-    for i in range(1,len(data[hsrc]['Mbps'])):
-         total = total + data[hsrc]['Mbps'][i]
-
-    print('média: {}'.format(total/(len(data[hsrc]['Mbps']) - 1)))
-    arq = open('bandwidth.txt','a')
-    arq.writelines('{0}: algoritmo={1}, bandwidth={2} \n'.format(hsrc, alg, total/(len(data[hsrc]['Mbps']) - 1)))
-    arq.close()
-    
-    return data
-
-#################################################################
-######### LEITURA DO ARQUIVOS DE DADOS DE TRANSMISSÃO MAX ####### 
-#################################################################
-def parse_iperf_data_max(alg, delay, host_addrs):
-    """ Parse the iperf data files for the given algorithm and RTT.
-
-        :param  alg         String with the TCP congestion control algorithms data to parse.
-        :param  delay       Integer with the delay data to parse.
-        :param  host_addrs  Dictionary with the host names as keys and their addresses as values.
-    """
-    data = dict({'h10': {'Mbps': list(), 'time': list()}, 'h10': {'Mbps': list(), 'time': list()}})
-                 
-
-    # Use time's first value as time=0, and convert the bps to Mbps
-    first_row = True
-    with open('iperf_taxa_max_{0}_{1}ms.txt'.format(alg, delay),'r+') as fcsv:
-        r = csv.DictReader(fcsv, delimiter=',', fieldnames=iperf_csv_header)
-        for row in r:
-            if host_addrs['h10'] in row['src_addr']:
-                time = mktime(datetime.strptime(str(row['time']), '%Y%m%d%H%M%S').timetuple())
-
-                # On the first row set up the required values. Then, check for repeated timestamps and fix that
-                if first_row:
-                    time_init = time
-                    first_row = False
-                    data['h10']['time'].append(time - time_init)
-                elif time-time_init == data['h10']['time'][-1]:
-                    data['h10']['time'].append(time - time_init + 1)
-                else:
-                    data['h10']['time'].append(time - time_init)
-                data['h10']['Mbps'].append(int(row['bps'])/1000000)
-                
-    # Pop the last row because it is the average bandwidth of the session
-
-    print('{0}: time={1}, bandwidth={2}'.format('h10', data['h10']['time'].pop(), data['h10']['Mbps'].pop()))
-    
-    total = 0
-    for i in range(1,len(data['h10']['Mbps'])):
-         total = total + data['h10']['Mbps'][i]
-
-    print('média: {}'.format(total/(len(data['h10']['Mbps']) - 1)))
-    arq = open('bandwidth_max.txt','a')
-    arq.writelines('{0}: algoritmo={1}, bandwidth={2} \n'.format('h10', alg, total/(len(data['h10']['Mbps']) - 1)))
-    arq.close()
-    
-    return data
-
-#################################################################
-############## GRÁFICOS DAS TAXAS DE TRANSMISSÃO  ############### 
-#################################################################
-
-def draw_fairness_plot(time_h101, bw_h101, alg, delay, hsrc, hdst):
-
-    print('*** Drawing the fairness plot...')
-    plt.plot(time_h101, bw_h101, label='Source Host {}'.format(hsrc))
-
-
-    plt.xlabel('Time (sec)')
-    plt.ylabel('Bandwidth (Mbps)')
-    plt.ylim(0,100)
-
-    plt.title("TCP Fairness Graph\n{0} TCP Congestion Control Algorithm Delay={1}ms"
-              .format(alg.capitalize(), delay))
-
-    plt.legend()
-    plt.grid()
-    plt.savefig('fairness_graph_{0}_{1}ms_{2}-{3}'.format(alg, delay, hsrc, hdst))
-    plt.close()
-
-
-#################################################################
-############ GRÁFICOS DAS TAXAS MAX DE TRANSMISSÃO  ############# 
-#################################################################
-
-def draw_plot_max(time_h101, bw_h101, alg, delay, hsrc, hdst):
-
-    print('*** Drawing the fairness plot...')
-    plt.plot(time_h101, bw_h101, label='Source Host {}'.format(hsrc))
-
-
-    plt.xlabel('Time (sec)')
-    plt.ylabel('Bandwidth (Mbps)')
-    plt.ylim(0,100)
-
-    plt.title("TCP Fairness Graph\n{0} TCP Congestion Control Algorithm Max Throughput Delay={1}ms"
-              .format(alg.capitalize(), delay))
-
-    plt.legend()
-    plt.grid()
-    plt.savefig('fairness_graph_{0}_{1}ms_{2}-{3}_Max_Throughput'.format(alg, delay, hsrc, hdst))
-    plt.close()
 
 #################################################################
 #################### DEFINIÇÃO DA REDE  ######################### 
@@ -335,12 +194,7 @@ def tcp_test(algs, delays, p_loss, queue):
         popens[h20].terminate()
         popens[h20].wait()
 
-#    alg_ajus = algs
-#    print(alg_ajustado)
-#    for i in range(len(alg_ajus)):
-#        data_fairness_max = parse_iperf_data_max(alg_ajus[i], delay, host_addrs)
-#        draw_plot_max(data_fairness_max['h{}'.format(10)]['time'], data_fairness_max['h{}'.format(10)]['Mbps'], alg_ajus[i], delay, 'h{}'.format(10), 'h{}'.format(20))
-    
+   
     
     print("*** Starting iperf servers ...")
     popens[h20] = h20.popen(['iperf3', '-s', '-p', '5001'])
@@ -354,8 +208,7 @@ def tcp_test(algs, delays, p_loss, queue):
     popens[h28] = h28.popen(['iperf3', '-s', '-p', '5001'])
     popens[h29] = h29.popen(['iperf3', '-s', '-p', '5001'])
     
-    
-    #delay = delays
+
     delay = v_delay[0]
     iperf_runtime = 200
     #alg = ['cubic','cubic','cubic','cubic','cubic','cubic','cubic','cubic','cubic','cubic']
