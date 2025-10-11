@@ -1,6 +1,6 @@
 # On the Interplay of Congestion and OSNR Degradation for TCP over Optical Networks
 
-Abstract—This work investigates transmission control protocol (TCP) performance over optical networks, highlighting the
+**Abstract**—This work investigates transmission control protocol (TCP) performance over optical networks, highlighting the
 interplay of physical layer effects and congestion caused by buffer overflow at intermediate nodes on different congestion
 control mechanisms. In optical networks packet dropping will happen due to optical signal-to noise ratio (OSNR) degradation
 due to amplified spontaneous emission (ASE) and nonlinear effects (NLI) in fiber affecting differently congestion control
@@ -12,4 +12,4 @@ impact on fairness by avoiding self-synchronization and slow convergence of comp
 that stringent signal quality requirements can be relaxed in forthcoming IPoDWDM consolidation of optical and packet
 networks.
 
-**Index Terms** — Congestion Control Algorithms, Physical Layer Impairments, Optical Networks.
+**Index Terms** — *Congestion Control Algorithms, Physical Layer Impairments, Optical Networks.*
