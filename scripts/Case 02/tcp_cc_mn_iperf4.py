@@ -102,7 +102,7 @@ class SimpleLinkTopo(Topo):
         # amp2 = ('amp2', {'target_gain': 40*.22*dB})
         # amp3 = ('amp3', {'target_gain': 50*.22*dB})
         # spans = [5*km, amp1, 5*km, amp2]
-        spans = [50*km]
+        spans = [30*km]
 
         # Link backbone routers (s1 & s2) together
         #self.addLink(s1, s2, cls=TCLink, **br_params)
