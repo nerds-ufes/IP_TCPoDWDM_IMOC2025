@@ -12,4 +12,4 @@ impact on fairness by avoiding self-synchronization and slow convergence of comp
 that stringent signal quality requirements can be relaxed in forthcoming IPoDWDM consolidation of optical and packet
 networks.
 
-Index Terms—Congestion Control Algorithms, Physical Layer Impairments, Optical Networks.
+**Index Terms** — Congestion Control Algorithms, Physical Layer Impairments, Optical Networks.
