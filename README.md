@@ -15,13 +15,39 @@ networks.
 **Index Terms** — *Congestion Control Algorithms, Physical Layer Impairments, Optical Networks.*
 
 ![Setup de testes](Images/Diagram_CC_TCP_BW2.png)
+
 **Fig 1** - *Setup: Setup created for flow testing with competition between 10 TCP flows.*
+
+
 ## Results
 ![Average throughput and Jain Fairness Index by TCP congestion control lossless algorithm, gOSNR ≥ 20 dB](Images/Thoughput_00_loss.png)
+
+**Fig. 2** - *Average throughput and Jain Fairness Index by TCP congestion control lossless algorithm, gOSNR ≥ 20 dB*
+
 ![Retransmission and Throughput average per Queue Variation by TCP congestion control lossless algorithm, gOSNR ≥ 20 dB](Images/Retr_00_loss.png) 
+
+**Fig. 3** - *Retransmission and Throughput average per Queue Variation by TCP congestion control lossless algorithm, gOSNR ≥ 20 dB*
+
 ![Average throughput and Jain Fairness Index by TCP congestion control algorithm with 0.2% losses - gOSNR ≈ 19.45 dB](Images/Thoughput_02_loss.png)
+
+**Fig. 3** - *Average throughput and Jain Fairness Index by TCP congestion control algorithm with 0.2% losses - gOSNR ≈ 19.45 dB*
+
 ![Retransmission and Throughput average per Queue Variation by TCP congestion control algorithm with 0.2% losses - gOSNR ≈ 19.45 dB](Images/Retr_02_loss.png)
+
+**Fig. 4** - *Retransmission and Throughput average per Queue Variation by TCP congestion control algorithm with 0.2% losses - gOSNR ≈ 19.45 dB*
+
 ![Average throughput and Jain Fairness Index by TCP congestion control algorithm with 0.5% losses - gOSNR ≈ 19.15 dBs](Images/Thoughput_05_loss.png)
+
+**Fig. 5** - *Average throughput and Jain Fairness Index by TCP congestion control algorithm with 0.5% losses - gOSNR ≈ 19.15 dBs*
+
 ![Retransmission and Throughput average per Queue Variation by TCP congestion control algorithm with 0.5% losses - gOSNR ≈ 19.15 dB](Images/Retr_05_loss.png)
+
+**Fig. 6** - *Average throughput and Jain Fairness Index by TCP congestion control algorithm with 0.8% losses - gOSNR ≈ 18.95 dB*
+
 ![Average throughput and Jain Fairness Index by TCP congestion control algorithm with 0.8% losses - gOSNR ≈ 18.95 dB](Images/Thoughput_08_loss.png)
+
+**Fig. 7** - **
+
 ![Retransmission and Throughput average per Queue Variation by TCP congestion control algorithm with 0.8% losses - gOSNR ≈ 18.95 dB](Images/Retr_08_loss.png)
+
+**Fig. 8** - **
