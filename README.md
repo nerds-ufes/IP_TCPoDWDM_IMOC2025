@@ -15,7 +15,7 @@ networks.
 **Index Terms** — *Congestion Control Algorithms, Physical Layer Impairments, Optical Networks.*
 
 ![Setup de testes](Images/Diagram_CC_TCP_BW2.png)
-
+**Fig 1** - *Setup: Setup created for flow testing with competition between 10 TCP flows.*
 ## Results
 ![Average throughput and Jain Fairness Index by TCP congestion control lossless algorithm, gOSNR ≥ 20 dB](Images/Thoughput_00_loss.png)
 ![Retransmission and Throughput average per Queue Variation by TCP congestion control lossless algorithm, gOSNR ≥ 20 dB](Images/Retr_00_loss.png) 
