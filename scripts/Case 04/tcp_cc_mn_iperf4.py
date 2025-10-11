@@ -93,15 +93,32 @@ class SimpleLinkTopo(Topo):
         s4 = self.addSwitch('s4', failMode='standalone', stp=True)
         
 
-        # Link backbone routers (s1 & s2) together
-        #self.addLink(s1, s2, cls=TCLink, **br_params)
+        # Optical network elements
+        params = {'transceivers': [('tx1',0*dBm, 0.4 * 1e-9, 50e9, 2.99792458 * 1e9, '64QAM', 6.0, 25.0e9, 10.0)],
+                  'monitor_mode': 'in'}
+        # params = {'transceivers': [('tx1',0*dBm,'C')],
+        #           'monitor_mode': 'in'}
+        t1 = self.addSwitch('t1', cls=Terminal, **params)
+        t2 = self.addSwitch('t2', cls=Terminal, **params)
+	    # ADD ROADM as r1
+        r1 = self.addSwitch('r1', cls=ROADM)
+        r2 = self.addSwitch('r2', cls=ROADM)
 
-        # Link access routers (s3 & s4) to the backbone routers
-        #self.addLink(s1, s3, cls=TCLink, **ar_params)
-        #self.addLink(s2, s4, cls=TCLink, **ar_params)
 
-        # Create the hosts h1x to h2x, and link them to access router 1
+# Link backbone routers (s1 & s2) together
+# self.addLink(s1, s2, cls=TCLink, **br_params)
+        # Ethernet links
+        self.addLink(s1,t1)
+        self.addLink(s2,t2)
         
+# WDM link
+        boost = ('boost', {'target_gain': 3.0*dB})
+        # amp1 = ('amp1', {'target_gain': 25*.22*dB})
+        # amp2 = ('amp2', {'target_gain': 40*.22*dB})
+        # amp3 = ('amp3', {'target_gain': 50*.22*dB})
+        # spans = [5*km, amp1, 5*km, amp2]
+        spans = [50*km]
+       
         h10 = self.addHost('h10',ip='10.0.0.10')
         h11 = self.addHost('h11',ip='10.0.0.11')
         h12 = self.addHost('h12',ip='10.0.0.12')
@@ -175,6 +192,11 @@ def tcp_test(algs, delays, p_loss, queue):
     h20, h21, h22, h23, h24, h25, h26, h27, h28, h29 = net.get('h20','h21','h22','h23','h24','h25','h26','h27','h28','h29')
     host_addrs = dict({'h10': h10.IP(), 'h11': h11.IP(), 'h12': h12.IP(), 'h13': h13.IP(), 'h14': h14.IP(), 'h15': h15.IP(),'h16': h16.IP(), 'h17': h17.IP(), 'h18': h18.IP(),'h19': h19.IP(), 'h20': h20.IP(), 'h21': h21.IP(), 'h22': h22.IP(),'h23': h23.IP(), 'h24': h24.IP(), 'h25': h25.IP(), 'h26': h26.IP(), 'h27': h27.IP(), 'h28': h28.IP(), 'h29': h29.IP()})
     print('Host addrs: {0}'.format(host_addrs))
+
+	restServer.start()
+    os.system("./config-mult_link)01.sh")
+    info(__doc__)
+    restServer.stop()
     
     #net = Mininet(topo)
     net.start()
